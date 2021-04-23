@@ -23,7 +23,7 @@ const Categories = () => {
       if(ngo.category === filter) {
        return ngo
       }  
-      }
+    }
   })
 
     return (

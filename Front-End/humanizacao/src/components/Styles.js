@@ -100,7 +100,7 @@ export const UseStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(2)
     },
     buttonNgoRegistration: {
-      marginLeft: theme.spacing(40),
+      marginRight: theme.spacing(40),
     },
     imageRegister: {
       backgroundImage: 'url(https://images.pexels.com/photos/4061216/pexels-photo-4061216.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)',

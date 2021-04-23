@@ -7,6 +7,7 @@ import Login from '../pages/LoginPage/Login'
 import SignUp from '../pages/SignUpPage/SignUp'
 import NgoRegistration from '../pages/NgoRegistrationPage/NgoRegistration'
 import Admin from '../pages/AdminPage/Admin'
+import EditNgoPage from '../pages/AdminPage/EditNgoPage'
 import ErrorPage from '../pages/ErrorPage'
 
 export default function Router() {
@@ -29,8 +30,11 @@ export default function Router() {
             <Route exact path="/users/admin">
                 <Admin/>
             </Route>
-            <Route exact path="/ngo/registration">
+            <Route exact path="/ngo/create">
                 <NgoRegistration/>
+            </Route>
+            <Route exact path="/ngo/edit">
+                <EditNgoPage/>
             </Route>
             <Route>
                 <ErrorPage/>

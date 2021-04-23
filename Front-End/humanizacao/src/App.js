@@ -1,12 +1,15 @@
 import React from 'react'
 import Router from './routes/Router'
-import { Theme } from './components/Theme'
+import { theme } from './components/theme'
 import { ThemeProvider } from '@material-ui/styles'
+import GlobalState from './globalStates/GlobalState'
 
 const App = () => {
   return (
-    <ThemeProvider Theme={Theme}>
+    <ThemeProvider theme={theme}>
+    <GlobalState>
     <Router />
+    </GlobalState>
     </ThemeProvider>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import axios from 'axios'
 import { UseStyles } from '../../components/Styles'
 import { useProtectedPage } from '../../hooks/useProtectedPage'
@@ -10,29 +10,32 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import GlobalStateContext from '../../globalStates/GlobalStateContext'
 
 
-const NgoRegistration = () => {
+const EditNgoPage = () => {
     useProtectedPage()
 
     const classes = UseStyles()
 
     const history = useHistory()
 
+    const { states, setters } = useContext(GlobalStateContext)
+
     const [form, onChangeInput] = useForm({
-      name: '',
-      cause: '',
-      category: '',
-      description: '',
-      address: '',
-      city: '',
-      state: '',
-      responsible: '',
-      phone: '',
-      email: ''
+      name: states.value.name,
+      cause: states.value.cause,
+      category: states.value.category,
+      description: states.value.description,
+      address: states.value.address,
+      city: states.value.city,
+      state: states.value.state,
+      responsible: states.value.responsible,
+      phone: states.value.phone,
+      email: states.value.email
     }) 
  
-    const onSubmitNgoRegistration = (event) => {
+    const onSubmitNgoEdit = (event) => {
       event.preventDefault()
       const body = {
         name: form.name,
@@ -52,13 +55,13 @@ const NgoRegistration = () => {
           Authorization: localStorage.getItem("token"),
         }
       }
-  
-      axios.post("https://humanizacao.herokuapp.com/ngo/create", body, headers)
+
+      axios.put(`https://humanizacao.herokuapp.com/ngo/${states.value.id}/edit`, body, headers)
       .then((response) => {
         goToAdminPage(history)
       })
       .catch((err) => {
-        alert("Erro ao realizar Cadastro")
+        alert("Erro ao Editar!")
       })
     }
 
@@ -67,9 +70,9 @@ const NgoRegistration = () => {
         <main className={classes.layoutNgoRegistration}>
         <Paper className={classes.paperNgoRegistration}>
       <Typography component="h1" variant="h4" align="center" gutterBottom>
-        Cadastre sua ONG abaixo:
+        Edite a ONG abaixo:
       </Typography>
-      <form onSubmit={onSubmitNgoRegistration}>
+      <form onSubmit={onSubmitNgoEdit}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -85,7 +88,7 @@ const NgoRegistration = () => {
           <TextField
             required
             fullWidth
-            label={"Qual tipo de causa a entidade luta?"} helperText="Causa Infantil, Habitacional, Animal..."
+            label={"Qual tipo de causa a entidade luta?"}
             name={"cause"}
             onChange={onChangeInput}
             value={form.cause}
@@ -93,10 +96,9 @@ const NgoRegistration = () => {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            inputProps={{ pattern: "(Assistencia Social|Cultura|Saude|Meio Ambiente|Habitacao|Educacao e Pesquisa)" }}
             required
             fullWidth
-            label={"Digite a categoria mais aproximada"} helperText="Os valores válidos são: Assistencia Social, Cultura, Saude, Meio Ambiente, Habitacao ou Educacao e Pesquisa"
+            label={"Digite a categoria mais aproximada. Os valores válidos são: Assistencia Social, Cultura, Saude, Meio Ambiente, Habitação ou Educacao e Pesquisa"}
             name={"category"}
             onChange={onChangeInput}
             value={form.category}
@@ -134,10 +136,9 @@ const NgoRegistration = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            inputProps={{ pattern: "(AC|AL|AP|AM|BA|CE|DF|GO|ES|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SP|SC|SE|TO)" }}
             required
             fullWidth
-            label={"Estado (Ex: CE, RN, SP...)"} 
+            label={"Estado (Ex: CE, RN, SP...)"}
             name={"state"}
             onChange={onChangeInput}
             value={form.state}
@@ -155,10 +156,9 @@ const NgoRegistration = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            inputProps={{ pattern: "([0-9]{2})([0-9]{4,5})([0-9]{4})" }}
             required
             fullWidth
-            label={"Digite o número da instituição ou responsável para contato"} helperText="Digite o número com DDD, apenas números"
+            label={"Digite o número da instituição ou responsável para contato"}
             name={"phone"}
             onChange={onChangeInput}
             value={form.phone}
@@ -178,13 +178,13 @@ const NgoRegistration = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
         <Button
-              className={classes.buttonNgoRegistration}
+              className={classes.submitLogin}
               variant={"contained"}
               fullWidth
               color={"secondary"}
               type={"submit"}
             >
-              Realizar Cadastro
+              Realizar Edição
             </Button>
         </Grid>
       </Grid>
@@ -195,4 +195,4 @@ const NgoRegistration = () => {
     );
 }
 
-export default NgoRegistration
+export default EditNgoPage

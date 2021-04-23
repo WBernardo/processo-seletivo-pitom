@@ -36,6 +36,7 @@ const Login = () => {
       axios.post("https://humanizacao.herokuapp.com/users/login", body)
       .then((response) => {
         window.localStorage.setItem('token', response.data.token)
+        window.localStorage.setItem('role', response.data.role)
         console.log(response.data)
         goToCategoriesPage(history)
       })

@@ -21,3 +21,7 @@ export const goToNgoRegistrationPage = (history) => {
 export const goToAdminPage = (history) => {
     history.push("/users/admin")
   }
+
+export const goToEditNgoPage = (history) => {
+    history.push("/ngo/edit")
+}

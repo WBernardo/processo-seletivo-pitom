@@ -7,10 +7,9 @@ export const useNgosList = () => {
   useEffect(() => {
     axios.get("https://humanizacao.herokuapp.com/ngo/all")
     .then((response) => {
-      console.log(response)
       setNgos(response.data.NGOS)
     }).catch((error) => console.log(error.message))
-  }, [])
+  }, [ngos])
 
   return ngos
 }

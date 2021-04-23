@@ -52,6 +52,8 @@ const NavBar = () => {
     const classes = useStyles()
     const history = useHistory()
 
+
+
     return (
         <ThemeProvider theme={theme}>
         <AppBar color="inherit" className={classes.AppBar}>
@@ -65,10 +67,13 @@ const NavBar = () => {
             <Typography variant="h6" className={classes.navCat} style={{cursor:'pointer'}} onClick={() => goToCategoriesPage(history)}>
                 ONGs
             </Typography>
-            <Typography variant="h6" className={classes.navAbt} style={{cursor:'pointer'}} onClick={() => goToAdminPage(history)}>
+            {window.localStorage.getItem('role') === 'ADMIN' ? <Typography variant="h6" className={classes.navAbt} style={{cursor:'pointer'}} onClick={() => goToAdminPage(history)}>
                 ADMIN
-            </Typography>
-            <Button variant="outlined" color="secondary" className={classes.buttonLogin} onClick={() => goToLoginPage(history)}>Login</Button>
+            </Typography> : null}
+            { window.localStorage.getItem('token')?
+              <Button variant="outlined" color="secondary" className={classes.buttonLogin} onClick={() => goToHomePage(history) || localStorage.clear() }>Logout</Button> :
+              <Button variant="outlined" color="secondary" className={classes.buttonLogin} onClick={() => goToLoginPage(history)}>Login</Button>
+            }
             <Button variant="outlined" color="primary" className={classes.buttonRegister} onClick={() => goToSignUpPage(history)}>Sign Up</Button>
             </Toolbar>
         </AppBar>
